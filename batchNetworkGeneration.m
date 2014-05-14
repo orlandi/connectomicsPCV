@@ -17,30 +17,17 @@ networkBaseFile = 'network_N?_CC?_?';
 yamlTag = '.yaml';
 adjacencyTag = '_adj.txt';
 positionTag = '_pos.txt';
-%networkSizes = [50, 100, 200, 500, 1000];
-%networkCCs = 0.1:0.1:0.6;
-%networkIterations = [1000, 500, 200, 100, 10];
+networkSizes = [50, 100, 200, 500, 1000];
+networkCCs = 0.1:0.1:0.6;
+networkIterations = [1000, 500, 200, 100, 10];
 
-networkSizes = [50, 100];
-networkCCs = 0.1:0.2:0.5;
-networkIterations = [2, 3];
-
-%% Generate 1 network
-N = 100;
-p = 0.12;
-targetCC = 0.25;
-inhFraction = 0.2;
-
-network = generateNetwork(N, p);
-network = rewireNetworkToTargetCC(network, targetCC);
-network = assignInhibitoryNeurons(network, inhFraction);
-% Save it
-networkToYAML(network, 'file.yaml');
-networkToPlainText(network, 'adj.txt', 'pos.txt');
+%networkSizes = [50, 100];
+%networkCCs = 0.1:0.2:0.5;
+%networkIterations = [2, 3];
 
 %% Batch iteration
 inhFraction = 0.2;
-
+overwrite = true;
 
 fprintf('Generating networks...\n');
 %%% Iterate sizes
@@ -57,6 +44,10 @@ for it1 = 1:length(networkSizes)
         for it3 = 1:networkIterations(it1)
             currentNetworkFile = regexprep(currentNetworkFile_tmp2, '?',num2str(it3),'once');
             fprintf('Working on %s...\n', currentNetworkFile);
+            if(~overwrite && exist([baseOutputPath filesep currentNetworkFile yamlTag],'file'))
+                fprintf('File already exists. Skipping...\n');
+                continue;
+            end
             %%% Generate the network
             network = generateNetwork(N, p, 'verbose', false);
             network = rewireNetworkToTargetCC(network, targetCC, 'verbose', false);
