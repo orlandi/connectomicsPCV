@@ -27,7 +27,7 @@ networkIterations = [1000, 500, 200, 100, 10];
 
 %% Batch iteration
 inhFraction = 0.2;
-overwrite = true;
+overwrite = false;
 
 fprintf('Generating networks...\n');
 %%% Iterate sizes
