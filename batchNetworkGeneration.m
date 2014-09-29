@@ -10,8 +10,8 @@ clear all;
 cd('~/drive/research/challengeKaggle/connectomicsPCV/');
 addpath(genpath([pwd filesep 'matlab']));
 
-baseOutputPath = [pwd filesep 'networks'];
-
+baseOutputPath = ['~/ResearchData/challengeKaggle/connectomicsPCV/' filesep 'networks'];
+maxNumCompThreads(2)
 % 1 question mark for each iterator (N, CC, repetition)
 networkBaseFile = 'network_N?_CC?_?';
 yamlTag = '.yaml';
@@ -50,7 +50,7 @@ for it1 = 1:length(networkSizes)
             end
             %%% Generate the network
             network = generateNetwork(N, p, 'verbose', false);
-            network = rewireNetworkToTargetCC(network, targetCC, 'verbose', false);
+            network = rewireNetworkToTargetCC(network, targetCC, 'verbose', false,'maxIterations',500000);
             network = assignInhibitoryNeurons(network, inhFraction);
             
             %%% Save the network
