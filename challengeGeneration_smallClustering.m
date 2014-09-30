@@ -28,12 +28,12 @@ disp([datestr(now, 'HH:MM:SS'), ' ', MSG]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% DEFINE THE INPUT FILES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fileList = {'test', 'valid'};
-networksBaseFolder = ['networks' filesep 'original' filesep];
-spikesFolder = ['data' filesep 'original-variations' filesep 'spikes' filesep];
+fileList = {'N100'};
+networksBaseFolder = ['networks' filesep 'N100' filesep];
+spikesFolder = ['data' filesep 'small-clustering' filesep 'N100' filesep 'spikes' filesep];
 %outputBaseFolder = ['data' filesep 'original-variations' filesep ];
 % To avoid running out of drive space
-outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'original-variations' filesep ];
+outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering' filesep 'N100' filesep];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% DEFINE THE ITERATORS

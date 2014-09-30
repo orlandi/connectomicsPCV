@@ -12,7 +12,7 @@ import nest
 import numpy
 import time
 import yaml
-import NEST_meta_routines_inh as nest_meta
+import NEST_meta_routines as nest_meta
 
 from BoundedAdaptation import *
 
@@ -21,20 +21,33 @@ from BoundedAdaptation import *
 print "------ adaptive-multibursts, Sep 26 Sep 2014 ------"
 # first, make sure command line parameters are fine
 cmd_arguments = sys.argv
-#if len(cmd_arguments) != 4:
-#  print "usage: ./CHA-adaptive-bursts.py input_yaml_file spike_times_output_file spike_indices_output_file"
-#  sys.exit(0)
-# else:
-inputList = ['adjA_Middle3-CCfull05inh']
+
+baseFile = 'N100_CC0?_?'
+
+clusterList = range(1,7)
+replicaList = range(1,501)
+
+iterations = len(clusterList)*len(replicaList)
 
 if len(cmd_arguments) != 2:
-  print "usage: ./CHA-adaptive-bursts.py list_iterator (starts at 1)"
+  print "usage: ./nest-smallnetworks.py #iteration (starts at 1)"
+  print "usage: ./nest-smallnetworks.py iterations (to know the number of total iterations)"
+  sys.exit(0)
+elif cmd_arguments[1] == 'iterations':
+  print "Total number of iterations: " + str(iterations)
   sys.exit(0)
 
-YAMLinputfilename = "networks/" + inputList[int(cmd_arguments[1])-1] + ".yaml"
-spiketimefilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh-times.txt"
-spikeindexfilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh-idx.txt"
-print "Selected newtork " + str(YAMLinputfilename)
+currentIteration = numpy.unravel_index(int(cmd_arguments[1])-1, ((len(clusterList),len(replicaList))))
+baseFile = baseFile.replace("?",str(clusterList[currentIteration[0]]),1)
+baseFile = baseFile.replace("?",str(replicaList[currentIteration[1]]),1)
+
+# ------------------------------ Define the input files ------------------------------ #
+YAMLinputfilename = "../../networks/N100/network_" + baseFile + ".yaml"
+spiketimefilename = "../../data/small-clustering/N100/spikes/" + baseFile + "-times.txt"
+spikeindexfilename = "../../data/small-clustering/N100/spikes/" + baseFile + "-idx.txt"
+
+print "Selected network " + str(YAMLinputfilename)
+print "Data will be stored at " + str(spiketimefilename) + " and " + str(spikeindexfilename)
 
 # ------------------------------ Simulation parameters ------------------------------ #
 MAX_ADAPTATION_ITERATIONS = 100 # maximum number of iterations to find parameters for target bursting rate
@@ -45,11 +58,10 @@ hours = 1.
 SIMULATION_TIME = hours*60.*60.*1000. # in ms
 TARGET_BURST_RATE = 0.1 # in Hz
 TARGET_BURST_RATE_ACCURACY_GOAL = 0.005 # in Hz
-INITIAL_WEIGHT_JE = 8.0 # internal synaptic weight, initial value, in pA
-WEIGHT_NOISE = 4. # external synaptic weight, in pA
-NOISE_RATE = 1.6 # rate of external inputs, in Hz
+INITIAL_WEIGHT_JE = 7.0 # internal synaptic weight, initial value, in pA
+WEIGHT_NOISE = 2.*0.28*20. # external synaptic weight, in pA
+NOISE_RATE = 0.2 # rate of external inputs, in Hz
 FRACTION_OF_CONNECTIONS = 1.0
-SAVE_ALL_ITERATIONS = True # Saves the spikes of every single adaptation stage
 
 # ------------------------------ Main loop starts here ------------------------------ #
 startbuild = time.time()
@@ -81,17 +93,11 @@ while abs(burst_rate-TARGET_BURST_RATE)>TARGET_BURST_RATE_ACCURACY_GOAL:
   weight = adaptation_runner.next(burst_rate)
   print "adaptation #"+str(adaptation_iteration)+": setting weight to "+str(weight)+" ..."
   # Start test simulation
-  [size,cons,neuronsE,espikes,noise,GIDoffset] = nest_meta.go_create_network(yamlobj, weight, WEIGHT_NOISE, NOISE_RATE, False, 1.0, -1, False)
+  [size,cons,neuronsE,espikes,noise,GIDoffset] = nest_meta.go_create_network(yamlobj, weight, WEIGHT_NOISE, NOISE_RATE, False, 1.0, -1, True)
   nest.Simulate(ADAPTATION_SIMULATION_TIME)
   burst_rate = nest_meta.determine_burst_rate(nest.GetStatus(espikes, "events")[0]["senders"], nest.GetStatus(espikes, "events")[0]["times"], ADAPTATION_SIMULATION_TIME, size, tauMS, FRACTION_OF_ACTIVE_NEURONS_FOR_BURST_DETECTION)
   print "-> the burst rate is "+str(burst_rate)+" Hz"
   
-  if SAVE_ALL_ITERATIONS == True:
-    spiketimefilename = "data/" + inputList[int(cmd_arguments[1])-1] + "_" + str(adaptation_iteration) + "-inh_off-times.txt"
-    spikeindexfilename = "data/" + inputList[int(cmd_arguments[1])-1] + "_" + str(adaptation_iteration) + "-inh_off-idx.txt"
-    print "Saving spike times to disk..."
-    nest_meta.save_spikes_to_disk(espikes, spikeindexfilename, spiketimefilename, GIDoffset)
-
   assert full_adaptation_iteration < MAX_ADAPTATION_ITERATIONS
   if adaptation_iteration >= MAX_PARTIAL_ADAPTATION_ITERATIONS:
     print "-> max partial iterations reached. Resetting..."
@@ -103,9 +109,7 @@ while abs(burst_rate-TARGET_BURST_RATE)>TARGET_BURST_RATE_ACCURACY_GOAL:
   full_adaptation_iteration += 1
 
 print "\n----------------------------- actual simulation -----------------------------"
-spiketimefilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh-times.txt"
-spikeindexfilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh-idx.txt"
-[size,cons,neuronsE,espikes,noise,GIDoffset] = nest_meta.go_create_network(yamlobj, weight, WEIGHT_NOISE, NOISE_RATE, False, 1.0, -1, False)
+[size,cons,neuronsE,espikes,noise,GIDoffset] = nest_meta.go_create_network(yamlobj, weight, WEIGHT_NOISE, NOISE_RATE, False, 1.0, -1, True)
 endbuild = time.time()
 print "Simulating..."
 nest.Simulate(SIMULATION_TIME)
@@ -126,26 +130,5 @@ print "Simulation time: %.2f s" % sim_time
 print "Saving spike times to disk..."
 nest_meta.save_spikes_to_disk(espikes, spikeindexfilename, spiketimefilename, GIDoffset)
 
-# Let's add another simulation with inhibition off
-print "\nTurning off inhibition and redoing the simulation...\n"
-
-spiketimefilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh_off-times.txt"
-spikeindexfilename = "data/" + inputList[int(cmd_arguments[1])-1] + "-inh_off-idx.txt"
-
-[size,cons,neuronsE,espikes,noise,GIDoffset] = nest_meta.go_create_network(yamlobj, weight, WEIGHT_NOISE, NOISE_RATE, False, 1.0, -1, True)
-print "Simulating..."
-startsimulate = time.time()
-nest.Simulate(SIMULATION_TIME)
-endsimulate = time.time()
-sim_time = endsimulate-startsimulate
-totalspikes = nest.GetStatus(espikes, "n_events")[0]
-print "Number of neurons: ", size
-print "Number of spikes recorded: ", totalspikes
-print "Avg. spike rate of neurons: %.2f Hz" % (totalspikes/(size*SIMULATION_TIME/1000.))
-burst_rate = nest_meta.determine_burst_rate(nest.GetStatus(espikes, "events")[0]["senders"], nest.GetStatus(espikes, "events")[0]["times"], ADAPTATION_SIMULATION_TIME, size, tauMS, FRACTION_OF_ACTIVE_NEURONS_FOR_BURST_DETECTION)
-print "Burst rate: "+str(burst_rate)+" Hz"
-print "Simulation time: %.2f s" % sim_time
-print "Saving spike times to disk..."
-nest_meta.save_spikes_to_disk(espikes, spikeindexfilename, spiketimefilename, GIDoffset)
 print "done."
 
