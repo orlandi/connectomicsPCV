@@ -35,6 +35,25 @@ You can download the datasets here:
 [Variations datasets](https://drive.google.com/folderview?id=0B9paVWGXEHk_a1NvY3JtX1VXcHc&usp=drive_web)
 
 
+Hidden neurons
+--------------
+The goal of this task is to check the performance of the reconstruction
+algorithms when some of the neurons are not accessible. For that we hide
+30% of the simulated neurons and only perform the reconstruction with
+the remaining 70%.
+
+We provide 10 sets of indices to 'kill' from the original normal-3 and
+normal-4 datasets (the ones from Kaggle used for training). Each
+file contains 300 indices (from 1 to 100) that you should 'kill' in your
+reconstruction, i.e, remove them from the original Fluorescence files.
+
+You can download the files here:
+[hidden-neurons datasets](https://drive.google.com/folderview?id=0B9paVWGXEHk_VzdKR1ZtYm50TUE&usp=sharing)
+
+
+
+
+
 Small datasets
 --------------
 TBC
