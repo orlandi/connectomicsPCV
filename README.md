@@ -56,10 +56,13 @@ Small datasets
 This is the main dataset of the post-verification phase. It consists of N=100 networks with a 20% of inhibitory neurons (blocked) and a fixed average clustering coefficient, ranging from 0.1 to 0.6. We provide networks with 6 different levels of clustering with 500 replicas each (3000 networks in total). The network dynamics are divided in three groups: 
 
 1. Low bursting (0.05 Hz). Network numbers from 1 to 150 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+
   [low-bursting datasets](https://www.dropbox.com/sh/78py9ldfatxu7lv/AABm0Fa6scBRqhxEwU0pX2w2a?dl=0)
 2. Normal bursting (0.1 Hz). Network numbers from 151 to 300 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+
   [normal-bursting datasets](https://mega.co.nz/#F!pMogDQhR!XO7zattDsoyNJ7JQ9dzGQg)
 3. High bursting (0.2 Hz). Network numbers from 301 to 450 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+
   [high-bursting datasets](https://drive.google.com/folderview?id=0B9paVWGXEHk_Zi11WWUzVjc5b1k&usp=sharing)
 
 Final overview
