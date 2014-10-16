@@ -43,8 +43,8 @@ baseFile = baseFile.replace("?",str(replicaList[currentIteration[1]]),1)
 
 # ------------------------------ Define the input files ------------------------------ #
 YAMLinputfilename = "../../networks/N100/network_" + baseFile + ".yaml"
-spiketimefilename = "/home/users/orlandi/ResearchData/challengeKaggle/connectomicsPCV/data/small-clustering/N100/spikes/" + baseFile + "-times.txt"
-spikeindexfilename = "/home/users/orlandi/ResearchData/challengeKaggle/connectomicsPCV/data/small-clustering/N100/spikes/" + baseFile + "-idx.txt"
+spiketimefilename = "/home/users/orlandi/ResearchData/challengeKaggle/connectomicsPCV/data/small-clustering-highrate/N100/spikes/" + baseFile + "-times.txt"
+spikeindexfilename = "/home/users/orlandi/ResearchData/challengeKaggle/connectomicsPCV/data/small-clustering-highrate/N100/spikes/" + baseFile + "-idx.txt"
 
 print "Selected network " + str(YAMLinputfilename)
 print "Data will be stored at " + str(spiketimefilename) + " and " + str(spikeindexfilename)
@@ -56,7 +56,7 @@ ADAPTATION_SIMULATION_TIME = 500*1000. # in ms
 FRACTION_OF_ACTIVE_NEURONS_FOR_BURST_DETECTION = 0.5
 hours = 1.
 SIMULATION_TIME = hours*60.*60.*1000. # in ms
-TARGET_BURST_RATE = 0.1 # in Hz
+TARGET_BURST_RATE = 0.2 # in Hz
 TARGET_BURST_RATE_ACCURACY_GOAL = 0.005 # in Hz
 INITIAL_WEIGHT_JE = 7.0 # internal synaptic weight, initial value, in pA
 WEIGHT_NOISE = 2.*0.28*20. # external synaptic weight, in pA

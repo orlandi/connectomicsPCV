@@ -22,7 +22,7 @@ addpath(genpath([pwd filesep 'matlab']));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-MSG = 'Generating small-clustering challenge datasets...';
+MSG = 'Generating small-clustering-lowrate challenge datasets...';
 disp([datestr(now, 'HH:MM:SS'), ' ', MSG]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,16 +31,17 @@ disp([datestr(now, 'HH:MM:SS'), ' ', MSG]);
 %%% DEFINE THE INPUT FILES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fileList = {'N100_CC0?_?'}; % 1-6, 1-500
-clusteringList = 1:6;
+clusteringList = 3:6;
 networkList = 451:500;
 
 networksBaseFolder = ['networks' filesep 'N100' filesep];
-spikesFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering' filesep 'N100' filesep 'spikes' filesep];
-outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering' filesep 'N100' filesep];
+spikesFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering-lowrate' filesep 'N100' filesep 'spikes' filesep];
+outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering-lowrate' filesep 'N100' filesep];
 
 for it1 = 1:length(fileList)
     for it2 = 1:length(clusteringList)
         for it3 = 1:length(networkList)
+
             baseFile = fileList{it1};
             baseFile = regexprep(baseFile,'?',num2str(clusteringList(it2)),'once');
             baseFile = regexprep(baseFile,'?',num2str(networkList(it3)),'once');

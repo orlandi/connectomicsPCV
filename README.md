@@ -51,9 +51,63 @@ You can download the files here:
 [hidden-neurons datasets](https://drive.google.com/folderview?id=0B9paVWGXEHk_VzdKR1ZtYm50TUE&usp=sharing)
 
 
-
-
-
 Small datasets
 --------------
-TBC
+This is the main dataset of the post-verification phase. It consists of N=100 networks with a 20% of inhibitory neurons (blocked) and a fixed average clustering coefficient, ranging from 0.1 to 0.6. We provide networks with 6 different levels of clustering with 500 replicas each (3000 networks in total). The network dynamics are divided in three groups: 
+
+1. Low bursting (0.05 Hz). Network numbers from 1 to 150 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+  [low-bursting datasets](https://www.dropbox.com/sh/78py9ldfatxu7lv/AABm0Fa6scBRqhxEwU0pX2w2a?dl=0)
+2. Normal bursting (0.1 Hz). Network numbers from 151 to 300 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+  [normal-bursting datasets](https://mega.co.nz/#F!pMogDQhR!XO7zattDsoyNJ7JQ9dzGQg)
+3. High bursting (0.2 Hz). Network numbers from 301 to 450 and 450 to 500. Clustering levels from 0.1 to 0.6 (in 0.1 increments). Each tar file includes 50 networks. You can download the files here:
+  [high-bursting datasets](https://drive.google.com/folderview?id=0B9paVWGXEHk_Zi11WWUzVjc5b1k&usp=sharing)
+
+Final overview
+--------------
+If you have sucessfully downloaded all the datasets you should have something like the following structure:
+
+1. Inhibition
+  * normal-1_inhibition.tgz
+  * normal-2_inhibition.tgz
+  * normal-3_inhibition.tgz
+  * normal-4_inhibition.tgz
+  * test_inhibition.tgz
+  * valid_inhibition.tgz
+1. Original-variations
+  1. test
+    * fluorescence_test_noise?_ls?_rate?.txt.gz (29 files like this one)
+  1. valid
+    * fluorescence_valid_noise?_ls?_rate?.txt.gz (29 files like this one)
+1. Hidden-neurons
+  * normal-3_kill.tar.gz
+  * normal-4_kill.tar.gz
+1. Small
+  1. low-bursting
+    * N100_CC0?_?_?.tar (24 files like this one)
+  1. normal-bursting
+    * N100_CC0?_?_?.tar (24 files like this one)
+  1. high-bursting
+    * N100_CC0?_?_?.tar (24 files like this one)
+
+Additional notes
+================
+
+Training
+--------
+You should not need to retrain your algorithms for these datasets. 
+
+However if you want to also retrain, you should let us know in which networks you retrained. With the following constraints:
+1. For the 'inhibition' and 'hidden neurons' datasets do not train on networks normal-3 and normal-4, we will use those to validate the results. Although there are no index to kill in the 'hidden neurons' dataset for normal-1 and normal-2, you can kill them yourself if you want to train in those networks.
+2. The 'original variations' dataset has no files available for training.
+3. For the small datasets only use for training networks 495 to 500.
+
+Questions
+---------
+If you have specific questions about the datasets, please ask them directly to me at orlandi(at)ecm.ub.edu
+
+Data mirrors
+------------
+We are sorting some mirrors for the datasets, since current hosting might be unreliable. If you think you can host the datasets, please let us know! Full dataset should be around 130GB.
+
+
+

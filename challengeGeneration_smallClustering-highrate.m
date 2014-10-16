@@ -22,7 +22,7 @@ addpath(genpath([pwd filesep 'matlab']));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-MSG = 'Generating small-clustering challenge datasets...';
+MSG = 'Generating small-clustering-highrate challenge datasets...';
 disp([datestr(now, 'HH:MM:SS'), ' ', MSG]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,8 +35,8 @@ clusteringList = 1:6;
 networkList = 451:500;
 
 networksBaseFolder = ['networks' filesep 'N100' filesep];
-spikesFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering' filesep 'N100' filesep 'spikes' filesep];
-outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering' filesep 'N100' filesep];
+spikesFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering-highrate' filesep 'N100' filesep 'spikes' filesep];
+outputBaseFolder = ['~/ResearchData/challengeKaggle/connectomicsPCV/data' filesep 'small-clustering-highrate' filesep 'N100' filesep];
 
 for it1 = 1:length(fileList)
     for it2 = 1:length(clusteringList)
