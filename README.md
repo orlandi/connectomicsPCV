@@ -9,7 +9,9 @@ Available datasets
 ==================
 The following datasets have been produced with the above scripts. Testing the challenge algorithms against them is a required part of the post challenge verification procedure.
 
-UPDATE: You can download all the datasets here:
+Download
+==================
+You can download all the datasets here:
 
 [Datasets](https://www.dropbox.com/sh/gibx9hz0p4u46ts/AABjgtXS6yNZkXWLIimHOduXa?dl=0)
 
@@ -80,6 +82,17 @@ If you have sucessfully downloaded all the datasets you should have something li
     * N100_CC0?_?_?.tar (24 files like this one)
   1. high-bursting
     * N100_CC0?_?_?.tar (24 files like this one)
+
+Update (Apr 27, 2015)
+================
+If you still want to participate in the post-challenge verification but do not have enough time to run all the datasets, please focus on these, as they are the essential ones:
+
+1. Original variations (these are 27 networks N=1000 in total)
+2. Small networks (use only the last 50 networks for each bursting regime, numbered form 451 to 500 and clustering levels 0.1 and 0.3). That would be 300 networks N=100 in total). In other words:
+  1. Low bursting (0.05 Hz). Network numbers from 451 to 500. Clustering levels 0.1 and 0.3.
+  2. Normal bursting (0.1 Hz).  Network numbers from 451 to 500. Clustering levels 0.1 and 0.3.
+  3. High bursting (0.2 Hz).  Network numbers from 451 to 500. Clustering levels 0.1 and 0.3.
+
 
 Additional notes
 ================
